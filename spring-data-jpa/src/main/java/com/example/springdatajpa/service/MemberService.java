@@ -4,15 +4,15 @@ import com.example.springdatajpa.domain.Member;
 import com.example.springdatajpa.repository.MemberRepository;
 import com.example.springdatajpa.repository.MemoryMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 public class MemberService {
 
     private final MemberRepository memberRepository;
-
-
 
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
@@ -54,7 +54,5 @@ public class MemberService {
     public void clearMembers(){
         memberRepository.clearAll();
     }
-
-
 }
 

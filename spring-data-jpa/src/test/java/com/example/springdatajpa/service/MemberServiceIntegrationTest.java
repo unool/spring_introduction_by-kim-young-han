@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest
-@Transactional
+//@Transactional
 class MemberServiceIntegrationTest {
 
     @Autowired
@@ -29,7 +29,7 @@ class MemberServiceIntegrationTest {
     void join() {
 
         Member member = new Member();
-        member.setName("hello");
+        member.setName("오께바레");
 
         Long id = service.join(member);
 

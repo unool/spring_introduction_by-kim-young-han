@@ -1,53 +1,49 @@
 package com.example.springdatajpa;
 
-import com.example.springdatajpa.repository.JdbcMemberRepository;
-import com.example.springdatajpa.repository.JdbcTemplateMemberRepository;
-import com.example.springdatajpa.repository.MemberRepository;
-import com.example.springdatajpa.repository.MemoryMemberRepository;
+import com.example.springdatajpa.repository.*;
 import com.example.springdatajpa.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 
 @Configuration
 public class SpringConfig {
 
     private final DataSource dataSource;
+    private final EntityManager em;
 
     @Autowired
-    public SpringConfig(DataSource dataSource) {
+    public SpringConfig(DataSource dataSource, EntityManager em) {
 
         this.dataSource = dataSource;
+        this.em = em;
     }
 
     @Bean
     public MemberService memberService(){
-
-        return new MemberService(jdbcTemplateMemberRepository());
+        return new MemberService(jpaMemeberRepository());
     }
+
+//    @Bean
+//    public MemberRepository memberRepository() {
+//        return new MemoryMemberRepository();
+//    }
+//
+//    @Bean
+//    public JdbcMemberRepository jdbcMemberRepository() {
+//        return new JdbcMemberRepository(dataSource);
+//    }
+//
+//    @Bean
+//    public JdbcTemplateMemberRepository jdbcTemplateMemberRepository() {
+//        return new JdbcTemplateMemberRepository(dataSource);
+//    }
 
     @Bean
-    public MemberRepository memberRepository()
-    {
-
-        return new MemoryMemberRepository();
+    public JpaMemberRepository jpaMemeberRepository() {
+        return new JpaMemberRepository(em);
     }
-
-    @Bean
-    public JdbcMemberRepository jdbcMemberRepository()
-    {
-
-        return new JdbcMemberRepository(dataSource);
-    }
-
-    @Bean
-    public JdbcTemplateMemberRepository jdbcTemplateMemberRepository()
-    {
-        return new JdbcTemplateMemberRepository(dataSource);
-    }
-
 }
